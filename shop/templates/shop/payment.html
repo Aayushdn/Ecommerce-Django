@@ -1,0 +1,152 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}
+Payment method 
+{% endblock title %}
+{% block css %}
+<style>
+.btn-khalti{
+    background-color: #5d2e8e;
+    border-color: #5d2e8e;
+    color:white
+    }
+</style>
+{% endblock css %}
+
+{% block body %}
+{% load static %}
+
+
+<div class="container my-4 " id="main">
+
+<div class="col-md-12 d-inline-block float-left mx-2">
+<h1 class="mb-4"> Please Proceed to Pay</h1>
+<ul class="list-group" id="itemPurchase">
+  
+</ul>
+</div>
+<div class="col-md-12 d-inline-block my-5">
+<h4> Payment Detail </h4>
+<div class="col-md-12 d-block">
+<ul class="list-group list-group-flush" id="detailPay">
+  
+</ul>
+<button class="btn btn-khalti my-4" id="payment-button"><span> <img src="{% static 'shop/khalti_icon.png' %}" width =75 height = 40></span>Pay with khalti </button>
+</div>
+
+</div>
+</div>
+{% endblock body %}
+
+{% block js %}
+
+    <!-- Place this where you need payment button -->
+    <!-- Place this where you need payment button -->
+    <!-- Paste this code anywhere in you body tag -->
+    <script>
+        function success_disp(){
+            localStorage.clear()
+            document.getElementById('main').innerHTML = ""
+            success_html = `
+            <div class = "col-md-4 d-inline-block">
+            <img src="{% static 'shop/submitted.png' %}" width = 100 height = 100>
+            </div><div class = "col-md-7 d-inline-block">
+             <h1>Payment Successful</h1>
+             <h3>Your order id is  {{ id }}. Use it to track you order at Mt everst Tracker</h3>
+             <p> Payment has sucessfully done By idx ${idx} Thanks for ordering with us </p>
+             <button class="btn btn-primary my-4" id = "finalDone">Done </button>
+             </div>
+            `
+            $('#main').append(success_html)
+            document. getElementById("finalDone").onclick = function () {
+            location.replace('/shop/')
+            };
+
+
+        }
+        cart = localStorage.getItem('cart')
+        function verifyPayment(payload){
+            $.ajax({
+                url: "/shop/verifyPayment/",
+                type: "POST",
+                data:payload,
+                dataType:'json',
+                success: function(response) {idx = response,success_disp() },
+                error:function(error){alert(error.responseJSON['message'],  "\r\n","Please Try Again")}
+            });
+        }
+        cart = JSON.parse(localStorage.getItem('cart'));
+        item_name = ''
+        // defining the name of product sent to paymrnt
+        for (item in cart){
+            item_name = item_name + cart[item][1].slice(0,10) + ' '
+        }
+        
+        //paymrnt code starts here
+        var config = {
+            // replace the publicKey with yours
+            "publicKey": "test_public_key_32e8582866374cffabf238934e7614a2",
+            "productIdentity": "{{ id }}",
+            "productName": item_name,
+            "productUrl": "https://gameofthrones.fandom.com/wiki/Dragons",
+            "paymentPreference": [
+                "MOBILE_BANKING",
+                "KHALTI",
+                "EBANKING",
+                "CONNECT_IPS",
+                "SCT",
+                ],
+            "eventHandler": {
+                onSuccess (payload) {
+                    // hit merchant api for initiating verfication
+                    console.log(payload);
+                    verifyPayment(payload)
+                },
+                onError (error) {
+                    console.log(error);
+                },
+                onClose () {
+                    console.log('widget is closing');
+                }
+            }
+        };
+
+        var checkout = new KhaltiCheckout(config);
+        var btn = document.getElementById("payment-button");
+        btn.onclick = function () {
+            // minimum transaction amount must be 10, i.e 1000 in paisa.
+            checkout.show({amount: 1000});
+        };
+        sumqty = 0
+        sumamt = 0
+        for (item in cart){
+            name = cart[item][1]
+            qty = cart[item][0]
+            sumqty = qty +sumqty 
+            sumamt = sumamt + cart[item][2];
+            myStr = `<li class="list-group-item d-flex justify-content-between align-items-center" id="purchaseItem">${name}
+            
+                            <span class="badge badge-primary badge-pill" id="qtyItem">${qty}</span>
+                            </li>`
+            $('#itemPurchase').append(myStr)
+            }
+        myStr2 = `
+        <li class="list-group-item">Total No of item :  <b> ${sumqty}</b></li>
+        <li class="list-group-item">Total Price :  <b>   $ ${sumamt}</b></li>
+        `
+        $('#detailPay').append(myStr2);
+        
+        
+
+
+
+
+
+
+        
+    </script>
+    <!-- Paste this code anywhere in you body tag -->
+    
+</body>
+</html>
+{% endblock js %}

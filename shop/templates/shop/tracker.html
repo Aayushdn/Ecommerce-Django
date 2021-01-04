@@ -1,0 +1,154 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}
+tracker Page
+{% endblock title %}
+
+
+{% block css %}
+<style>
+  .timeBadge{
+    border-right: gray 1.5px solid;
+    padding: 5px;
+  }
+  .timediv{
+    border-style: solid;
+    border-radius: 10px;
+    padding: 5px;
+  }
+</style>
+
+{% endblock css %}
+
+
+
+{% block body %}
+
+<div class="container">
+  <div class="col my-4">
+    <h2>
+         MT everest Tracker  -  Enter Orders Details
+    </h2>
+    <form method="POST"  action="#" id="trackerForm">{% csrf_token %}
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="name">Order ID</label>
+            <input type="Name" class="form-control" id="orderid" name="orderid" placeholder="Order ID">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Track order</button>
+      </form>
+     
+
+        
+    <div class="col my-4">
+        <h2>
+          Yours Order Updaes are given below:
+        </h2>
+        <div>
+            <ul class="list-group"  id="items">
+            
+              </ul>
+        </div>
+
+        
+    </div>
+
+    <div class="col my-4">
+        <h2>
+          Yours Order Details:
+        </h2>
+        <div>
+            <ul class="list-group"  id="citems">
+            
+              </ul>
+        </div>
+
+        
+    </div>
+    
+    
+            
+    </div>
+</div>
+{% endblock body %}
+
+
+{% block js %}
+<script>
+  $('#trackerForm').submit(function (event) {
+    $('#items').empty();
+    var formData = {
+      'orderid': $('input[name=orderid]').val(),
+      'email': $('input[name=email]').val(),
+      'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+    }
+
+    $.ajax({
+      type: 'POST',
+      url: '/shop/tracker/',
+      data: formData,
+      encode: true
+    })
+      .done(function (data) {
+        $('#citems').empty();
+        data = JSON.parse(data)
+
+        if (data['status'] == "success") {
+          updates = data['updates']
+          for (i = 0; i < updates.length; i++) {
+            text = updates[i]['text']
+            time = updates[i]['time']
+            date = time.slice(0, 10)
+            ac_time = time.slice(10, 16)
+            timeZone = time.slice(16,)
+            myStr = `<span><li class="list-group-item d-flex justify-content-between align-items-center">
+                          ${text}</span>
+                          <div class='timediv'>
+                          <span class = "timeBadge" title = "Date">${date}</span>
+                          <span class = "timeBadge" title = "Time">${ac_time}</span>
+                          <span class = "timeBadge" title = "Timezone">NPT </span>
+                          </div>
+                          
+                        </li>`
+            $('#items').append(myStr)
+
+          }
+          cart = JSON.parse(data['itemJSon']);
+          for (var item in cart) {
+            name_prd = cart[item][1]
+            qty = cart[item][0]
+            myStr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                      ${name_prd}
+                  <span class="badge badge-primary">${qty}</span>
+                </li>
+
+                `
+            $('#citems').append(myStr)
+
+          }
+        }
+        else {
+          myStr = `<span><li class="list-group-item d-flex justify-content-between align-items-center">
+                          Please make sure about your order Id and email</span>
+                          
+                        </li>`
+          $('#items').append(myStr)
+          $('#citems').append(myStr)
+
+        }
+
+
+
+
+      });
+    event.preventDefault()
+  });
+
+</script>
+
+{% endblock js %}

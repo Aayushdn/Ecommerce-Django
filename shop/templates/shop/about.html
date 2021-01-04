@@ -1,0 +1,114 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}
+  About us
+{% endblock title %}
+
+
+{% block css %}
+
+<style>
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+
+  .abtHeader{
+    text-align: center;
+  }
+
+  .col-md-4{
+    width: 33.3%;
+    height: auto;;
+  }
+
+  .DevPic{
+    width: 100%;
+    clip-path: circle(50% at 50% 50%);
+    height: auto;
+  }
+</style>
+  
+{% endblock css %}
+  
+
+
+{% block body %}
+
+<meta name="theme-color" content="#563d7c">
+
+
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+  </head>
+  <body>
+<main role="main">
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-3">Hi!</h1>
+      <p>It is the online store founded on 2020 april 24.I
+        t is situated in Nepal Here you can but anything at cost effective rate....</p>
+      <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Example row of columns -->
+    <div class="row my-5">
+      <div class="col-md-12 col-sm-12">
+        <h1 class="abtHeader">
+          Meet our Developer !
+        </h1>
+      </div>
+    </div>
+    <div class="row my-5">
+      <div class="col-md-4">
+        <img src= '/media/shop/images/pro - Copy.jpg' class="DevPic">
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus,... </p>
+        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+      </div>
+      <div class="col-md-4">
+        <img src= '/media/shop/images/pro - Copy.jpg' class="DevPic">
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus,... </p>
+        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+      </div>
+      <div class="col-md-4">
+        <img src= '/media/shop/images/pro - Copy.jpg' class="DevPic">
+        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, ....</p>
+        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+      </div>
+    </div>
+
+    <hr>
+
+  </div> <!-- /container -->
+
+</main>
+
+
+
+
+
+
+
+{% endblock body %}
+
+
+{% block javascripts %}
+  
+{% endblock javascripts %}
+  
+  

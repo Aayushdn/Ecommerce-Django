@@ -1,0 +1,68 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}
+  Contact Page
+{% endblock title %}
+
+
+{% block css %}
+<style>
+  .main{
+    align-items: center;
+  }
+</style>
+  
+{% endblock css %}
+  
+
+
+{% block body %}
+{% load static %}
+  <div class="container align-items-center" id="main">
+    <form action="/shop/contact/" method="POST" id="contactForm">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter your Name" name="name">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter your Email" name="email">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone number (with country code)</label>
+        <input type="tel" class="form-control" id="phone" placeholder="Enter your Phone number" name="phone">
+      </div>
+
+      
+      
+      <div class="form-group">
+        <label for="desc">Example textarea</label>
+        <textarea class="form-control" id="desc" rows="3" name="desc" placeholder="Describe your opinion...."></textarea>
+      </div>
+
+      
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+  </div>
+{% endblock body %}
+
+
+{% block js %}
+<script>
+$('#contactForm').submit(function(){
+  alert('Thanks your message have been delivered')
+  $(document).ready(function(){
+    window.location = '/shop/'
+  
+
+  });
+ 
+  
+});
+</script>
+
+  
+{% endblock js %}
+  
+  

@@ -1,0 +1,60 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}
+  search
+{% endblock title %}
+
+
+{% block css %}
+  
+{% endblock css %}
+  
+
+
+{% block body %}
+
+<div class="container">
+{% if allprods %}
+{% for i in allprods %}
+
+
+<div class="card my-5 col-md-12 d-flex">
+  <div class="row no-gutters"  style = "height:auto;">
+    <div class="col-md-4 rounded mx-auto d-block" style = "max-width:250px; max-height:300px; overflow:hidden">
+      <img src="/media/{{i.image}}" class="card-img img-fluid rounded mx-auto d-block " alt="..." style = " max-width: 100%; and height: auto;">
+
+    </div>
+    <div class="col-md-8 d-flex">
+      <div class="card-body align-items-center">
+        <a href="/shop/Products/{{i.Product_id}}"><h5 class="card-title">{{i.Product_name}}</h5></a>
+        <p class="card-text">{{i.Product_descr}}</p>
+        <p class="card-text"><strong class="text-muted">${{ i.price }}</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% else%}
+<div class = "d-flex my-5">
+<svg width="18em" height="18em" viewBox="0 0 16 16" class="bi bi-search mx-auto d-block text-muted" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+  <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+</svg>
+</div>
+
+<center><h4 class= "text-muted"> <strong>Can't find items related to your search <br> Please Try Again</strong></h1></center> 
+
+
+
+{% endif %}
+</div>  
+
+
+{% endblock body %}
+
+
+{% block javascripts %}
+  
+{% endblock javascripts %}
+  
+  

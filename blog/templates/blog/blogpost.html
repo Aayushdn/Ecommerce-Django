@@ -1,0 +1,81 @@
+{% extends 'blog/basic.html' %}
+{% block body %}
+
+<div class = "container">
+<div class="row">
+    <div class="col-md-8 blog-main">
+    <div class = "row">
+      <div class="col-md-6">
+        <h3 class="pb-4 my-4 font-italic border-bottom">
+          {{post.title}}
+        </h3>
+      </div>
+      <div class="col-md-6">
+          <div class="fb-like pb-4 my-4 font-italic border-bottom" data-href="http://127.0.0.1:8080/blog/blogpost/{{post.post_id}}" data-width="" data-layout="button_count" data-action="like" data-size="large" data-share="true"></div>
+      </div> 
+    </div>
+
+      <div class="blog-post mt-3">
+        <h2 class="blog-post-title mt-5">{{post.heading0 }}</h2>
+        <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+        <p class ="mt-2">{{post.cheading0 }}</p>
+        
+
+        
+        <h2 class="mt-5">{{post.heading1 }}</h2>
+        <p class="my-2">{{post.cheading1 }}</p>
+        
+        <h3 class="mt-5">{{post.heading2 }}</h3>
+        <p class="my-2">{{post.cheading2 }}</p>
+        </div>
+        
+
+    
+
+      
+
+      
+    </div><!-- /.blog-main -->
+
+    <aside class="col-md-4 blog-sidebar">
+      <div class="p-4 mb-3 bg-light rounded">
+        <h4 class="font-italic">About</h4>
+        <p class="mb-0">Mt everest is an<em> Shopping Website</em> Here you can find anything from anywhere without any problem </p>
+      </div>
+      
+
+      
+
+      <div class="p-4">
+        <h4 class="font-italic">Elsewhere</h4>
+        <ol class="list-unstyled">
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ol>
+      </div>
+    </aside><!-- /.blog-sidebar -->
+        
+   
+</div>
+
+<hr>
+<div class="fb-comments" data-href="http://127.0.0.1:8080/blog/blogpost/{{post.post_id}}" data-numposts="5" data-width=""></div>
+<div class="suggestedPostDiv mt-5">
+
+<h4 class="mb-3">Suggested Post for you</h3>
+<ul class="suggestedPost">
+{% for item in allpost %}
+  <li><a href = "/blog/blogpost/{{item.post_id}}">{{item.title}}</a><br></li>
+  
+  {% endfor %}
+  </div>
+</div>
+
+{% endblock body %}
+
+
+
+
+
+
